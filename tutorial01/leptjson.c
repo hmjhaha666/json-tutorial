@@ -7,14 +7,14 @@
 typedef struct {
     const char* json;
 }lept_context;
-
+//解析空白
 static void lept_parse_whitespace(lept_context* c) {
     const char *p = c->json;
     while (*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r')
         p++;
     c->json = p;
 }
-
+//解析null
 static int lept_parse_null(lept_context* c, lept_value* v) {
     EXPECT(c, 'n');
     if (c->json[0] != 'u' || c->json[1] != 'l' || c->json[2] != 'l')
@@ -23,7 +23,7 @@ static int lept_parse_null(lept_context* c, lept_value* v) {
     v->type = LEPT_NULL;
     return LEPT_PARSE_OK;
 }
-
+//解析value
 static int lept_parse_value(lept_context* c, lept_value* v) {
     switch (*c->json) {
         case 'n':  return lept_parse_null(c, v);
